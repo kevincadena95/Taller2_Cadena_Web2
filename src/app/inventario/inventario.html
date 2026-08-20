@@ -1,0 +1,24 @@
+<h2 class="titulo">NUESTROS PRODUCTOS</h2>
+
+<div class="contenedorProductos">
+
+    @for (producto of productos(); track producto.id) {
+
+    <div class="producto">
+        <div class="contenedorImagen">
+            <img [src]="producto.image" [alt]="producto.title" class="imagenProducto">
+        </div>
+
+        <div class="informacionProducto">
+
+            <h2>{{ producto.title }}</h2>
+            <p class="categoria">{{ producto.category }}</p>
+            <h3 class="precio">${{ producto.price }}</h3>
+            <p class="stock">Stock: {{ producto.rating.count }}</p>
+
+        </div>
+    </div>
+
+    }
+
+</div>
