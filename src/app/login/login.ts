@@ -1,16 +1,40 @@
-import { Component, inject } from '@angular/core';
-import { FormGroup } from '@angular/forms';
+import { Component, inject, signal } from '@angular/core';
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Auth } from '../service/auth';
+import { Router } from '@angular/router';
+import { NgClass } from "../../../node_modules/@angular/common/types/_common_module-chunk";
 
 @Component({
   selector: 'app-login',
-  imports: [],
+  imports: [ReactiveFormsModule, NgClass],
   templateUrl: './login.html',
   styleUrl: './login.css',
 })
 export class Login {
 
-  private fb = inject(FormGroup)
-  private auth = inject(Auth)
+  private fb = inject(FormBuilder);
+  private auth = inject(Auth);
+  private router = inject(Router);
+  errorLogin = signal(false);
+
+  formularioLogin = this.fb.group({
+    usuario: ['', Validators.required],
+    contraseña: ['', Validators.required],
+  })
+
+  ingresar() {
+    if (this.formularioLogin.valid) {
+      const user = this.formularioLogin.value.usuario;
+      const password = this.formularioLogin.value.contraseña;
+
+      const exito = this.auth.entrar(user!, password!);
+
+      if (exito) {
+        this.router.navigate(["inventario"]);
+      } else {
+        this.errorLogin.set(true);
+      }
+    }
+  }
 
 }

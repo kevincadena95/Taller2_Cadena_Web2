@@ -11,7 +11,7 @@ export class Auth {
   entrar(usuario: string, contraseña: string): boolean {
 
     if (this.user === usuario && this.password === contraseña) {
-      localStorage.setItem('token', usuario)
+      localStorage.setItem('userAuth', usuario)
       return true;
     } else {
       return false;
